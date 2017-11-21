@@ -1,6 +1,0 @@
-{
-  "KituraRegistration-MongoDB-q2j0": {
-    "uri": "mongodb://localhost:27017",
-    "ca": ""
-  }
-}

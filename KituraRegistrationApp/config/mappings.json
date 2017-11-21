@@ -1,0 +1,9 @@
+{
+  "mongodb": {
+    "searchPatterns": [
+      "cloudfoundry:KituraRegistrationApp-MongoDB-u1c1",
+      "env:KituraRegistrationApp_MongoDB_u1c1",
+      "file:/config/localdev-config.json:KituraRegistrationApp-MongoDB-u1c1"
+    ]
+  }
+}
