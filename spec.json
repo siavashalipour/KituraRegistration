@@ -1,0 +1,23 @@
+{
+  "appType": "scaffold",
+  "appName": "kituraRegistration",
+  "bluemix": {
+    "server": {
+      "services": [
+        "kituraRegistration-MongoDB-i7c6"
+      ],
+      "name": "kituraRegistration",
+      "env": {}
+    },
+    "mongodb": {
+      "uri": "mongodb://localhost:27017",
+      "serviceInfo": {
+        "name": "kituraRegistration-MongoDB-i7c6",
+        "label": "compose-for-mongodb",
+        "plan": "Standard"
+      }
+    },
+    "backendPlatform": "SWIFT",
+    "name": "kituraRegistration"
+  }
+}

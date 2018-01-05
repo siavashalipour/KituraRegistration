@@ -1,0 +1,6 @@
+{
+  "kituraRegistration-MongoDB-i7c6": {
+    "uri": "mongodb://localhost:27017",
+    "ca": ""
+  }
+}

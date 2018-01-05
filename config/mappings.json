@@ -1,0 +1,9 @@
+{
+  "mongodb": {
+    "searchPatterns": [
+      "cloudfoundry:kituraRegistration-MongoDB-i7c6",
+      "env:kituraRegistration_MongoDB_i7c6",
+      "file:/config/localdev-config.json:kituraRegistration-MongoDB-i7c6"
+    ]
+  }
+}
