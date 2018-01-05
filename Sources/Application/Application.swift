@@ -7,6 +7,7 @@ import KituraContracts
 import Health
 import Meow
 import MongoKitten
+import SwiftyJSON
 
 public let health = Health()
 
@@ -40,18 +41,32 @@ public class App {
         let accountCollection = Meow.database["Account"]
         
         // register
-        router.post("/register", handler: { request, response, _ in
-            if let email = request.queryParameters[AccountObjectKey.email] {
-                if let pwd = request.queryParameters[AccountObjectKey.pwd] {
-                    let document: Document = [AccountObjectKey.email: email, AccountObjectKey.pwd: pwd]
-                    do {
-                        _ = try accountCollection.insert(document)
-                    } catch _ {
-                        try response.send(status: .badRequest).end()
+        router.all("/register", middleware: BodyParser())
+        router.post("/register") { request, response, next in
+            guard let parsedBody = request.body else {
+                next()
+                return
+            }
+            switch parsedBody {
+            case .json(let jsonBody):
+                if let email = jsonBody[AccountObjectKey.email] as? String {
+                    if let pwd = jsonBody[AccountObjectKey.pwd] as? String {
+                        let document: Document = [AccountObjectKey.email: email, AccountObjectKey.pwd: pwd]
+                        do {
+                            let id = try accountCollection.insert(document)
+                            try response.send("\(id)").end()
+                        } catch _ {
+                            try response.send(status: .badRequest).end()
+                        }
+                        try response.send("Hello \(email)").end()
                     }
                 }
+                
+            default:
+                break
             }
-        })
+            next()
+        }
         
         // login
         router.get("/login", handler: { request, response, _ in
