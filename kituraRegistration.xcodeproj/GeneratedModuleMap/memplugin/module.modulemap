@@ -1,4 +1,4 @@
 module memplugin {
-    umbrella "/Users/siavash/kituraRegistration/.build/checkouts/omr-agentcore-1826539389957424207/src/memplugin/include"
+    umbrella "/Users/siavash/KituraRegistration/.build/checkouts/omr-agentcore-1826539389957424207/src/memplugin/include"
     export *
 }

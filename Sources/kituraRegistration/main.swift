@@ -35,7 +35,7 @@ func getEnvironmentArguments() -> EnvironmentValue {
         mongoPort = port
     }
     // get mongodb name
-    var mongoName = "LocalStore"
+    var mongoName = "LocalAccount"
     if let nameElement = arguments.filter({$0.contains(mongodbDatabaseNameKeyword)}).first {
         let dbName = nameElement.replacingOccurrences(of: nameElement, with: "")
         mongoName = dbName

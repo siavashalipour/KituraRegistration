@@ -53,12 +53,11 @@ public class App {
                     if let pwd = jsonBody[AccountObjectKey.pwd] as? String {
                         let document: Document = [AccountObjectKey.email: email, AccountObjectKey.pwd: pwd]
                         do {
-                            let id = try accountCollection.insert(document)
-                            try response.send("\(id)").end()
+                            let _ = try accountCollection.insert(document)
+                            try response.send(Account.init(with: document)).end()
                         } catch _ {
                             try response.send(status: .badRequest).end()
                         }
-                        try response.send("Hello \(email)").end()
                     }
                 }
                 
