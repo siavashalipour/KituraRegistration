@@ -1,4 +1,4 @@
 module hcapiplugin {
-    umbrella "/Users/siavash/KituraRegistration/.build/checkouts/omr-agentcore-1826539389957424207/src/hcapiplugin/include"
+    umbrella "/Users/siavash/KituraRegistration/.build/checkouts/omr-agentcore--5590585244534473019/src/hcapiplugin/include"
     export *
 }

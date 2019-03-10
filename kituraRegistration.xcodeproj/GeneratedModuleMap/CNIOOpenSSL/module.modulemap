@@ -1,0 +1,4 @@
+module CNIOOpenSSL {
+    umbrella "/Users/siavash/KituraRegistration/.build/checkouts/swift-nio-ssl.git--3791373191097805779/Sources/CNIOOpenSSL/include"
+    export *
+}
