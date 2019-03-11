@@ -48,11 +48,8 @@ public class App {
     
     // add a thing to the user
     try addThingRouter()
-    
-    // fetch User
-    
-    // add an object to the user
   }
+  
   func registerRouter() throws {
     let accountCollection = Meow.database["Account"]
     router.all("/register", middleware: BodyParser())
@@ -124,23 +121,38 @@ public class App {
   }
   func loginRouter() throws {
     let accountCollection = Meow.database["Account"]
-    router.get("/login", handler: { request, response, _ in
-      if let email = request.queryParameters[AccountObjectKey.email] {
-        if let pwd = request.queryParameters[AccountObjectKey.pwd] {
-          if let account: Document = try accountCollection.findOne(AccountObjectKey.email == email && AccountObjectKey.pwd == pwd) {
-            let decoder = BSONDecoder()
-            let accountObj: Account = try decoder.decode(Account.self, from: account)
-            try response.send(accountObj).end()
-          } else {
-            try response.send(status: .notFound).end()
-          }
-        } else {
-          try response.send(status: .badRequest).end()
-        }
-      } else {
-        try response.send(status: .badRequest).end()
+    router.all("/login", middleware: BodyParser())
+    router.post("/login") { request, response, next in
+      guard let parsedBody = request.body else {
+        next()
+        return
       }
-    })
+      switch parsedBody {
+      case .json(let jsonBody):
+        if let email = jsonBody[AccountObjectKey.email] as? String {
+          if let pwd = jsonBody[AccountObjectKey.pwd] as? String {
+            let document: Document = [AccountObjectKey.email: email, AccountObjectKey.pwd: pwd]
+            do {
+              let docQuery = Query.init(document)
+              if let currentAccountDoc = try accountCollection.findOne(docQuery) {
+                let bsonDecoder = BSONDecoder()
+                let currentAccount: Account = try bsonDecoder.decode(Account.self, from: currentAccountDoc)
+                try response.send(currentAccount).end()
+              } else {
+                try response.send(status: .notFound).end()
+              }
+            } catch let error {
+              print("!!! \(error)")
+              try response.send(status: .badRequest).end()
+            }
+          }
+        }
+        
+      default:
+        break
+      }
+      next()
+    }
   }
   public func run() throws {
     try postInit()
